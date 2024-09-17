@@ -246,6 +246,7 @@ class auth extends \auth_plugin_base {
      * @return array of IdP's
      */
     public function loginpage_idp_list($wantsurl) {
+        global $CFG;
         $conf = $this->config;
 
         // If we have disabled the visibility of the idp link, return with an empty array right away.
@@ -257,6 +258,18 @@ class auth extends \auth_plugin_base {
         if ($this->is_configured() === false) {
             return [];
         }
+
+        $returl = new moodle_url('/auth/saml2/selectidp.php');
+
+        return [[
+                'url'  => $returl,
+                'icon' => '',
+                'iconurl' => '',
+                'name' => $CFG->saml_button_text,
+            ]];
+
+        /* Unused code to force SAML Login to be handled in another page
+
 
         // The array of IdPs to return.
         $idplist = [];
@@ -328,6 +341,8 @@ class auth extends \auth_plugin_base {
         }
 
         return $idplist;
+
+        */
     }
 
     /**
